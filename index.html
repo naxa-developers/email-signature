@@ -1,210 +1,800 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Signature Generator</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Naxa Signature Generator</title>
 
-<!-- Bootstrap Icons -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
 
-<!-- Bootstrap CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
 
-<!-- Custom Styles -->
-<style>
- @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap');
-
-* {
-    margin: 0;
-    padding: 0;
-    font-family: 'Montserrat', sans-serif;
-}
-
-
-::selection {
-            background-color: transparent;
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-.name-section {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 1rem;
-}
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px 0;
+        }
 
-.copy-btn {
-    border: none;
-    background: none;
-    cursor: pointer;
-    color: #836f6f; 
-    font-size: 1rem;
-}
+        ::selection {
+            background-color: rgba(102, 126, 234, 0.2);
+        }
 
-.copy-btn:hover {
-    color: rgb(90, 78, 78); 
-}
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
 
-.copy-btn:active {
-    color: rgb(37, 17, 17); 
-}
+        .main-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
 
-</style>
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px;
+            text-align: center;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: -0.02em;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-weight: 400;
+        }
+
+        .content-area {
+            display: grid;
+            grid-template-columns: 2fr 3fr;
+            gap: 0;
+            min-height: 600px;
+        }
+
+        .form-section {
+            padding: 40px;
+            background: #fff;
+        }
+
+        .preview-section {
+            padding: 40px;
+            background: #f8fafc;
+            border-left: 1px solid #e2e8f0;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: #374151;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            background: #fff;
+            font-family: inherit;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .social-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+        .input-with-icon i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+            font-size: 1.1rem;
+        }
+
+        .input-with-icon .form-control {
+            padding-left: 40px;
+        }
+
+        .generate-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 16px 24px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .generate-btn:active {
+            transform: translateY(0);
+        }
+
+        .help-link {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .help-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .help-link a:hover {
+            color: #764ba2;
+        }
+
+        .preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .preview-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1f2937;
+        }
+
+        .copy-btn {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .copy-btn:hover {
+            background: #059669;
+            transform: translateY(-1px);
+        }
+
+        .copy-btn:active {
+            transform: translateY(0);
+        }
+
+        .signature-preview {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e5e7eb;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .empty-state {
+            text-align: center;
+            color: #9ca3af;
+            font-style: italic;
+            padding: 60px 20px;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        /* Signature Template Styles */
+        .name-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+        }
+
+        .signature-template {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .signature-wrapper {
+            max-width: 560px;
+        }
+
+        #dynamicName {
+            font-size: 1rem;
+            font-weight: 700;
+            line-height: 1.25rem;
+            color: #333132;
+            margin-bottom: 4px;
+            text-transform: capitalize;
+            white-space: nowrap;
+        }
+
+        .role-wrapper {
+            margin-bottom: 18px;
+        }
+
+        #dynamicRole {
+            font-size: 0.75rem;
+            line-height: 0.9375rem;
+            text-transform: uppercase;
+            white-space: nowrap;
+            color: #F98A07;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+        }
+
+        .contact-section {
+            display: inline-block;
+            padding-right: 20px;
+            margin-right: 20px;
+            border-right: solid 1px #D7D7D7;
+        }
+
+        .contact-icon-wrapper {
+            display: inline-block;
+            vertical-align: middle;
+            padding-right: 8px;
+        }
+
+        .contact-icon {
+            height: 20px;
+            width: 20px;
+        }
+
+        .contact-text-wrapper {
+            display: inline-block;
+            vertical-align: middle;
+            padding-bottom: 6px;
+        }
+
+        #dynamicContact {
+            font-size: 0.8125rem;
+            line-height: 1rem;
+            color: #333132;
+        }
+
+        #personalSocial {
+            display: inline-block;
+            vertical-align: top;
+            padding-top: 4px;
+        }
+
+        .social-link {
+            margin-right: 16px;
+        }
+
+        .social-link:last-child {
+            margin-right: 0;
+        }
+
+        .social-icon {
+            height: 18px;
+            width: 18px;
+        }
+
+        .company-section {
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+
+        .info-section {
+            display: inline-block;
+            padding-right: 28px;
+            margin-right: 28px;
+            border-right: solid 1px #D7D7D7;
+        }
+
+        .logo-wrapper {
+            margin-bottom: 20px;
+        }
+
+        .company-logo {
+            width: 112px;
+            height: 33px;
+        }
+
+        .company-social-link {
+            margin-right: 10px;
+        }
+
+        .company-social-link:last-child {
+            margin-right: 0;
+        }
+
+        .company-social-icon {
+            height: 18px;
+            width: 18px;
+        }
+
+        .address-section {
+            display: inline-block;
+            margin: 0;
+            vertical-align: top;
+            padding-top: 10px;
+        }
+
+        .address-text {
+            font-size: 0.8125rem;
+            line-height: 1rem;
+            color: #333132;
+            margin-bottom: 8px;
+        }
+
+        .address-lines {
+            display: inline-block;
+            padding-right: 4px;
+        }
+
+        .directions-wrapper {
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        .directions-icon {
+            height: 20px;
+            width: 20px;
+        }
+
+        .website-link {
+            text-decoration: none;
+        }
+
+        .website-text {
+            color: #0055FF;
+            font-size: 0.8125rem;
+            line-height: 1rem;
+            font-weight: 600;
+        }
+
+        .divider {
+            border-bottom: solid 1px #D7D7D7;
+        }
+
+        .description {
+            font-size: 0.75rem;
+            font-weight: 400;
+            line-height: 1rem;
+            color: #757575;
+            margin-top: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .content-area {
+                grid-template-columns: 1fr;
+            }
+
+            .preview-section {
+                border-left: none;
+                border-top: 1px solid #e2e8f0;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .social-inputs {
+                grid-template-columns: 1fr;
+            }
+
+            .form-section,
+            .preview-section {
+                padding: 30px 20px;
+            }
+        }
+
+        /* Success Animation */
+        @keyframes success {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .copy-success {
+            animation: success 0.3s ease;
+        }
+
+        /* Hide elements by default */
+        #linkedinLink,
+        #githubLink #twitterLink,
+        #websiteLink {
+            display: none;
+        }
+
+        #copyBtn {
+            display: none;
+        }
+
+        #signatureTemplate {
+            display: none;
+        }
+    </style>
 </head>
+
 <body>
 
-<div class="container">
-  <div class="row justify-content-center">
-    <div class="col-lg-6">
-      <div class="card mt-5">
-        <div class="card-body">
-          <h5 class="card-title text-center">Signature Generator</h5>
-        
-          <form id="addTextForm">
-            <div class="mb-3">
-              <label for="name" class="form-label">Name:</label>
-              <input type="text" class="form-control" id="name" name="name">
+    <div class="container">
+        <div class="main-card">
+            <div class="header">
+                <img class="company-logo" src="https://naxa-developers.github.io/email-signature/assets/NAXA-logo.png"
+                    alt="NAXA-logo">
+                <h1>Professional Signature Generator</h1>
             </div>
-            <div class="mb-3">
-              <label for="role" class="form-label">Role:</label>
-              <input type="text" class="form-control" id="role" name="role">
+
+            <div class="content-area">
+                <div class="form-section">
+                    <form id="signatureForm">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" class="form-control" id="name" placeholder="Enter your full name">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="role">Job Title</label>
+                            <input type="text" class="form-control" id="role"
+                                placeholder="e.g., Chief Operating Officer">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contact">Phone Number</label>
+                            <div class="input-with-icon">
+                                <i class="bi bi-telephone"></i>
+                                <input type="text" class="form-control" id="contact" placeholder="+1 (555) 123-4567">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Personal Social Media</label>
+                            <div class="social-inputs">
+                                <div class="input-with-icon">
+                                    <i class="bi bi-linkedin"></i>
+                                    <input type="url" class="form-control" id="linkedin"
+                                        placeholder="LinkedIn profile URL">
+                                </div>
+                                <div class="input-with-icon">
+                                    <i class="bi bi-github"></i>
+                                    <input type="url" class="form-control" id="github" placeholder="GitHub profile URL">
+                                </div>
+                                <div class="input-with-icon">
+                                    <i class="bi bi-twitter"></i>
+                                    <input type="url" class="form-control" id="twitter"
+                                        placeholder="Twitter profile URL">
+                                </div>
+                                <div class="input-with-icon">
+                                    <i class="bi bi-globe"></i>
+                                    <input type="url" class="form-control" id="website" placeholder="Website URL">
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="button" class="generate-btn" onclick="generateSignature()">
+                            <i class="bi bi-magic"></i> Generate Signature
+                        </button>
+                    </form>
+
+                    <div class="help-link">
+                        <strong>Need help setting up in Gmail?</strong><br>
+                        <a href="https://naxa-developers.github.io/email-signature/help" target="_blank">
+                            View our setup guide <i class="bi bi-arrow-up-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="preview-section">
+                    <div class="preview-header">
+                        <h3 class="preview-title">Preview</h3>
+                        <button id="copyBtn" class="copy-btn" onclick="copySignature()">
+                            <i class="bi bi-clipboard-check"></i> Copy Signature
+                        </button>
+                    </div>
+
+                    <div class="signature-preview">
+                        <div id="emptyState" class="empty-state">
+                            <i class="bi bi-file-text"></i>
+                            <p>Fill out the form to see your signature preview</p>
+                        </div>
+
+                        <div id="signatureTemplate" class="signature-template">
+                            <div class="signature-wrapper">
+                                <table cellpadding="0" cellspacing="0">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div>
+                                                    <strong id="dynamicName">John Doe</strong>
+                                                </div>
+                                                <div class="role-wrapper">
+                                                    <strong id="dynamicRole">Chief Operating Officer</strong>
+                                                </div>
+                                                <div>
+                                                    <div>
+                                                        <div class="contact-section">
+                                                            <div class="contact-icon-wrapper">
+                                                                <img src="https://naxa-developers.github.io/email-signature/assets/phone.png"
+                                                                    class="contact-icon" alt="phone">
+                                                            </div>
+                                                            <div class="contact-text-wrapper">
+                                                                <span id="dynamicContact">9802300064</span>
+                                                            </div>
+                                                        </div>
+                                                        <div id="personalSocial">
+                                                            <a id="linkedinLink" href="#" target="_blank"
+                                                                class="social-link"><img class="social-icon"
+                                                                    src="https://naxa-developers.github.io/email-signature/assets/linked-in.png"
+                                                                    alt="linkedin"></a>
+                                                            <a id="githubLink" href="#" target="_blank"
+                                                                class="social-link"><img class="social-icon"
+                                                                    src="https://naxa-developers.github.io/email-signature/assets/github.png"
+                                                                    alt="github"></a>
+                                                            <a id="twitterLink" href="#" target="_blank"
+                                                                class="social-link"><img class="social-icon"
+                                                                    src="https://naxa-developers.github.io/email-signature/assets/twitter.png"
+                                                                    alt="twitter"></a>
+                                                            <a id="websiteLink" href="#" target="_blank"
+                                                                class="social-link"><img class="social-icon"
+                                                                    src="https://naxa-developers.github.io/email-signature/assets/website.png"
+                                                                    alt="website"></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="company-section">
+                                                    <div class="info-section">
+                                                        <div class="logo-wrapper">
+                                                            <img class="company-logo"
+                                                                src="https://naxa-developers.github.io/email-signature/assets/NAXA-logo.png"
+                                                                alt="NAXA-logo">
+                                                        </div>
+                                                        <div>
+                                                            <a href="https://www.facebook.com/naxa.np/" target="_blank"
+                                                                class="company-social-link"><img
+                                                                    class="company-social-icon"
+                                                                    src="https://naxa-developers.github.io/email-signature/assets/facebook-logo-button 1.png"
+                                                                    alt="facebook-logo"></a>
+                                                            <a href="https://www.instagram.com/naxanp/?hl=en"
+                                                                target="_blank" class="company-social-link"><img
+                                                                    class="company-social-icon"
+                                                                    src="https://naxa-developers.github.io/email-signature/assets/instagram 1.png"
+                                                                    alt="instagram"></a>
+                                                            <a href="https://twitter.com/naxanp" target="_blank"
+                                                                class="company-social-link"><img
+                                                                    class="company-social-icon"
+                                                                    src="https://naxa-developers.github.io/email-signature/assets/twitter.png"
+                                                                    alt="twitter"></a>
+                                                            <a href="https://www.linkedin.com/company/naxa-pvt.-ltd./mycompany/"
+                                                                target="_blank" class="company-social-link"><img
+                                                                    class="company-social-icon"
+                                                                    src="https://naxa-developers.github.io/email-signature/assets/linked-in.png"
+                                                                    alt="linkedin"></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="address-section">
+                                                        <div class="address-text">
+                                                            <div class="address-lines">
+                                                                <span>Omkareshwor Mandir Road, Shantinagar,</span><br>
+                                                                <span> Kathmandu, Nepal</span>
+                                                            </div>
+                                                            <div class="directions-wrapper"><a
+                                                                    href="https://goo.gl/maps/63ugzTqcftnJNVUH9"
+                                                                    target="_blank">
+                                                                    <img src="https://naxa-developers.github.io/email-signature/assets/directions.png"
+                                                                        alt="" class="directions-icon">
+                                                                </a></div>
+                                                        </div>
+                                                        <div><a href="https://www.naxa.com.np" target="_blank"
+                                                                class="website-link"><span
+                                                                    class="website-text">www.naxa.com.np</span></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="divider"></div>
+                                <div class="description">
+                                    NAXA, founded in 2014, excels in Geo-ICT consulting, using geospatial tech to tackle
+                                    low-income community challenges. With expertise in digital mapping and data
+                                    applications, we've completed 200+ projects across Climate Change, Disaster Risk
+                                    Reduction, and Urban Planning. Our impact has garnered awards from NASA, AUVSI, IBM,
+                                    World Bank, and the Asian Disaster Preparedness Center.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="mb-3">
-              <label for="contact" class="form-label">Contact Number:</label>
-              <input type="text" class="form-control" id="contact" name="contact">
-            </div>
-            <div class="d-grid gap-2">
-              <button type="button" class="btn btn-primary" onclick="addText()">Generate Signature</button>
-              <strong> Learn to how to set the signature on Gmail using our </strong> <a href="https://naxa-developers.github.io/email-signature/help" target="_blank" style="color:#0055FF; font-weight: 500;">help guide ⤴</a>
-            </div>
-        </form>
+        </div>
     </div>
-</div>
-</div>
-</div>
 
-<div id="templateContainer">
-    <div style="max-width: 560px; padding: 28px;">
-        <table cellpadding="0" cellspacing="0">
-            <tbody>
-                <tr>
-                    <td>
-                        <div class="name-section">
-                            <strong id="dynamicName" style="font-size: 1rem; font-weight:700; line-height: 1.25rem; color: #333132; margin-bottom: 4px; text-transform: capitalize; white-space: nowrap;">Nishon Tandukar</strong>
-                            <div  class="id">
-                              <button id="copy" type="button" class="copy-btn" >
-                                <i class="bi bi-clipboard-check"></i>
-                                <p>Copy</p>
-                              </button>
-                            </div>
-                        </div>
-                        <div style="margin-bottom: 18px;">
-                            <strong  id="dynamicRole" style="font-size: 0.75rem; line-height: 0.9375rem; text-transform: uppercase; white-space: nowrap; color: #F98A07; font-weight: 600; letter-spacing: 0.15em;">Chief Operating Officer</strong>
-                        </div>
-                        <div>
-                            <div>
-                                <div style="display: inline-block; padding-right: 20px; margin-right: 20px; border-right: solid 1px #D7D7D7;">
-                                    <div style="display: inline-block; vertical-align:middle; padding-right: 8px;">
-                                        <img src="https://naxa-developers.github.io/email-signature/assets/phone.png" style="height: 20px; width: 20px;" alt="phone">
-                                    </div>
-                                    <div style="display: inline-block; vertical-align:middle; padding-bottom: 6px;">
-                                        <span id="dynamicContact" style="font-size: 0.8125rem; line-height: 1rem; color: #333132;">9802300064</span>
-                                    </div>
-                                </div>
-                                <div style="display: inline-block; vertical-align: top; padding-top: 4px;">
-                                    <a href="https://www.linkedin.com/company/naxa-pvt.-ltd./mycompany/" target="_blank" style="margin-right: 16px;"><img style="height: 18px; width: 18px;" src="https://naxa-developers.github.io/email-signature/assets/linked-in.png" alt="linked-in"></a>
-                                    <a href="https://github.com/naxa-developers" target="_blank"><img style="height: 18px; width: 18px;" src="https://naxa-developers.github.io/email-signature/assets/github.png" alt="github"></a>
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div style="margin-top: 30px; margin-bottom: 20px;">
-                            <div class="info-section" style="display: inline-block; padding-right: 28px; margin-right: 28px; border-right: solid 1px #D7D7D7;">
-                                <div style="margin-bottom: 20px;">
-                                    <img width="112px" height="33px" src="https://naxa-developers.github.io/email-signature/assets/NAXA-logo.png" alt="NAXA-logo">
-                                </div>
-                                <div>
-                                    <a href="https://www.facebook.com/naxa.np/" target="_blank"><img style="height: 18px; width: 18px; margin-right: 10px;" src="https://naxa-developers.github.io/email-signature/assets/facebook-logo-button 1.png" alt="facebook-logo"></a>
-                                    <a href="https://www.instagram.com/naxanp/?hl=en" target="_blank"><img style="height: 18px; width: 18px; margin-right: 10px" src="https://naxa-developers.github.io/email-signature/assets/instagram 1.png" alt="instagram"></a>
-                                    <a href="https://twitter.com/naxanp" target="_blank"><img style="height: 18px; width: 18px; margin-right: 10px" src="https://naxa-developers.github.io/email-signature/assets/twitter.png" alt="twitter"></a>
-                                    <a href="https://www.linkedin.com/company/naxa-pvt.-ltd./mycompany/" target="_blank"><img style="height: 18px; width: 18px;" src="https://naxa-developers.github.io/email-signature/assets/linked-in.png" alt="linked-in"></a>
-                                </div>
-                            </div>
-                            <div style="display: inline-block; margin: 0; vertical-align: top; padding-top: 10px;">
-                                <div style="font-size: 0.8125rem; line-height: 1rem; color:#333132; margin-bottom: 8px;">
-                                    <div style="display:inline-block; padding-right: 4px;">
-                                        <span>Omkareshwor Mandir Road, Shantinagar,</span><br>
-                                        <span> Kathmandu, Nepal</span>
-                                    </div>
-                                    <div style="display: inline-block; vertical-align: top;"><a href="https://goo.gl/maps/63ugzTqcftnJNVUH9" target="_blank">
-                                        <img src="https://naxa-developers.github.io/email-signature/assets/directions.png" alt="" style="height:'20px'; width: 20px;">
-                                    </a></div><a href="https://goo.gl/maps/63ugzTqcftnJNVUH9" target="_blank">
-                                    </a>
-                                </div>
-                                <div><a href="https://www.naxa.com.np" target="_blank" style="text-decoration: none;"><span style="color:#0055FF; font-size: 0.8125rem; line-height: 1rem; font-weight: 600;">www.naxa.com.np</span></a>
-</div>
-</div>
-</div>
-</td>
-</tr>
-</tbody>
-</table>
-<div style="border-bottom: solid 1px #D7D7D7;"></div>
-<div style="font-size: 0.75rem; font-weight: 400; line-height: 1rem; color: #757575; margin-top: 20px;">
-    NAXA, founded in 2014, excels in Geo-ICT consulting, using geospatial tech to tackle low-income community challenges. With expertise in digital mapping and data applications, we've completed 200+ projects across Climate Change, Disaster Risk Reduction, and Urban Planning. Our impact has garnered awards from NASA, AUVSI, IBM, World Bank, and the Asian Disaster Preparedness Center.</div>
-</div>
+    <script>
+        function generateSignature() {
+            const name = document.getElementById("name").value;
+            const role = document.getElementById("role").value;
+            const contact = document.getElementById("contact").value;
+            const linkedin = document.getElementById("linkedin").value;
+            const github = document.getElementById("github").value;
+            const twitter = document.getElementById("twitter").value;
+            const website = document.getElementById("website").value;
 
-</div>
-</div>
+            // Validate required fields
+            if (!name || !role || !contact) {
+                alert("Please fill in all required fields (Name, Role, and Contact)");
+                return;
+            }
 
-<script>
-function addText() {
-    var name = document.getElementById("name").value;
-    var role = document.getElementById("role").value;
-    var contact = document.getElementById("contact").value;
+            // Update signature content
+            document.getElementById("dynamicName").textContent = name;
+            document.getElementById("dynamicRole").textContent = role;
+            document.getElementById("dynamicContact").textContent = contact;
 
-    // Update name
-    document.getElementById("dynamicName").textContent = name;
+            // Handle personal social media links
+            const linkedinLink = document.getElementById("linkedinLink");
+            const githubLink = document.getElementById("githubLink");
+            const twitterLink = document.getElementById("twitterLink");
+            const websiteLink = document.getElementById("websiteLink");
 
-    // Update role
-    document.getElementById("dynamicRole").textContent = role;
+            if (linkedin) {
+                linkedinLink.href = linkedin;
+                linkedinLink.style.display = "inline-block";
+            } else {
+                linkedinLink.style.display = "none";
+            }
 
-    // Update contact number
-    document.getElementById("dynamicContact").textContent = contact;
+            if (github) {
+                githubLink.href = github;
+                githubLink.style.display = "inline-block";
+            } else {
+                githubLink.style.display = "none";
+            }
 
-    // Display the generated signature
-    document.getElementById("templateContainer").style.display = "block";
-  }
+            if (twitter) {
+                console.log("twitter:", twitter);
+                twitterLink.href = twitter;
+                twitterLink.style.display = "inline-block";
+            } else {
+                twitterLink.style.display = "none";
+            }
 
+            if (website) {
+                websiteLink.href = website;
+                websiteLink.style.display = "inline-block";
+            } else {
+                websiteLink.style.display = "none";
+            }
 
-  function selectText(node) {
-    node = document.getElementById(node);
+            // Show signature and hide empty state
+            document.getElementById("emptyState").style.display = "none";
+            document.getElementById("signatureTemplate").style.display = "block";
+            document.getElementById("copyBtn").style.display = "flex";
 
+            // Add success animation to generate button
+            const btn = document.querySelector('.generate-btn');
+            btn.classList.add('copy-success');
+            setTimeout(() => btn.classList.remove('copy-success'), 300);
+        }
 
-    if (document.body.createTextRange) {
-        const range = document.body.createTextRange();
-        range.moveToElementText(node);
-        range.select();
-    } else if (window.getSelection) {
-        const selection = window.getSelection();
-        const range = document.createRange();
-        range.selectNodeContents(node);
-        selection.removeAllRanges();
-        selection.addRange(range);
-    } else {
-        console.warn("could not select");
-    }
-}
+        function copySignature() {
+            const signatureElement = document.getElementById("signatureTemplate");
 
-const copyButton = document.querySelector('.copy-btn');
-copyButton.addEventListener('click', () => { selectText('templateContainer'); document.execCommand("copy"); alert("copied to clipboard");});
+            if (window.getSelection) {
+                const selection = window.getSelection();
+                const range = document.createRange();
+                range.selectNodeContents(signatureElement);
+                selection.removeAllRanges();
+                selection.addRange(range);
 
+                try {
+                    document.execCommand("copy");
 
+                    // Update button text temporarily
+                    const btn = document.getElementById("copyBtn");
+                    const originalHTML = btn.innerHTML;
+                    btn.innerHTML = '<i class="bi bi-check-circle"></i> Copied!';
+                    btn.classList.add('copy-success');
 
-</script>
+                    setTimeout(() => {
+                        btn.innerHTML = originalHTML;
+                        btn.classList.remove('copy-success');
+                    }, 2000);
+
+                } catch (err) {
+                    alert("Failed to copy signature. Please select and copy manually.");
+                }
+
+                selection.removeAllRanges();
+            }
+        }
+
+        // Auto-generate signature when user types (debounced)
+        let timeout;
+        document.addEventListener('input', function (e) {
+            if (e.target.matches('#name, #role, #contact, #linkedin, #github , #twitter, #website')) {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => {
+                    const name = document.getElementById("name").value;
+                    const role = document.getElementById("role").value;
+                    const contact = document.getElementById("contact").value;
+
+                    if (name && role && contact) {
+                        generateSignature();
+                    }
+                }, 500);
+            }
+        });
+    </script>
 
 </body>
+
 </html>
